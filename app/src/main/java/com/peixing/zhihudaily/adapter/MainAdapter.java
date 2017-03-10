@@ -8,17 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.peixing.zhihudaily.R;
-import com.peixing.zhihudaily.ui.DetailActivity;
+import com.peixing.zhihudaily.ui.activity.DetailActivity;
 import com.peixing.zhihudaily.utils.GlideUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * A custom adapter to use with the RecyclerView widget.
@@ -52,7 +48,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         //Here you can fill your row view
         itemViewHolder.tvWord.setText(store.get(position).get("title"));
-        GlideUtils.LoadPic(context, store.get(position).get("image"), itemViewHolder.ivSrc);
+        if (store.get(position).get("image") != null) {
+            GlideUtils.LoadPic(context, store.get(position).get("image"), itemViewHolder.ivSrc);
+        } else {
+            itemViewHolder.ivSrc.setVisibility(View.GONE);
+        }
         itemViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +60,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("title", store.get(position).get("title"));
                 intent.putExtra("id", store.get(position).get("id"));
-                intent.putExtra("image", store.get(position).get("image"));
+//                intent.putExtra("image", store.get(position).get("image"));
                 context.startActivity(intent);
             }
         });

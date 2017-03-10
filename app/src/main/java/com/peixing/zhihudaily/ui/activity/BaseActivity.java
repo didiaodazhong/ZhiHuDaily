@@ -1,4 +1,4 @@
-package com.peixing.zhihudaily.ui;
+package com.peixing.zhihudaily.ui.activity;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
