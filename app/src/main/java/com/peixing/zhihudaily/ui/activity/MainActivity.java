@@ -1,6 +1,7 @@
 package com.peixing.zhihudaily.ui.activity;
 
 import android.Manifest;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,7 @@ import com.peixing.zhihudaily.PermissionListener;
 import com.peixing.zhihudaily.R;
 import com.peixing.zhihudaily.adapter.MainAdapter;
 import com.peixing.zhihudaily.presenter.MainPresenter;
+import com.peixing.zhihudaily.ui.fragment.CommendFragment;
 import com.peixing.zhihudaily.ui.fragment.MainFragment;
 import com.peixing.zhihudaily.ui.fragment.PsychologyFragment;
 import com.peixing.zhihudaily.ui.fragment.ThemeFragment;
@@ -161,7 +164,13 @@ public class MainActivity extends BaseActivity
             return true;
         } else if (id == R.id.action_night) {
             //TODO 实现夜间模式
-
+            if ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO) {
+                getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            // 调用 recreate() 使设置生效
+//            recreate();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -173,6 +182,7 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Bundle bundle = new Bundle();
+        toolbar.setTitle("知乎日報");
         if (id == R.id.nav_home) {
             if (mContent != mainFragment) {
                 getSupportFragmentManager().beginTransaction()
@@ -180,6 +190,7 @@ public class MainActivity extends BaseActivity
                         .hide(mContent)
                         .commit();
             }
+            mContent = mainFragment;
             //主页
         } else {
             psychologyFragment = new PsychologyFragment();
@@ -190,18 +201,27 @@ public class MainActivity extends BaseActivity
                 bundle.putString("desc", "了解自己和别人，了解彼此的欲望和局限。");
                 bundle.putString("image", "http://pic3.zhimg.com/0e71e90fd6be47630399d63c58beebfc.jpg");
                 psychologyFragment.setArguments(bundle);
-                mContent = psychologyFragment;
+
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.frame_main, psychologyFragment).
-                        hide(mainFragment)
+                        hide(mContent)
                         .commit();
+                mContent = psychologyFragment;
                 // Handle the camera action
             } else if (id == R.id.nav_user) {
+                toolbar.setTitle("用户推荐日报");
+                CommendFragment commendFragment = new CommendFragment();
                 bundle.putString("id", 12 + "");
                 bundle.putString("name", "用户推荐日报");
-                bundle.putString("desc", "了解自己和别人，了解彼此的欲望和局限。");
-                bundle.putString("image", "http://pic3.zhimg.com/0e71e90fd6be47630399d63c58beebfc.jpg");
-                themeFragment.setArguments(bundle);
+                bundle.putString("desc", "内容由知乎用户推荐，海纳主题百万，趣味上天入地");
+                bundle.putString("image", "http://pic4.zhimg.com/2c38a96e84b5cc8331a901920a87ea71.jpg");
+                commendFragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.frame_main, commendFragment).
+                        hide(mContent)
+                        .commit();
+                mContent = commendFragment;
             } else if (id == R.id.nav_movie) {
                 bundle.putString("id", 3 + "");
                 bundle.putString("name", "电影日报");

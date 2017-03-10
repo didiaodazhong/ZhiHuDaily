@@ -11,8 +11,8 @@ import android.view.View;
 
 import com.peixing.zhihudaily.R;
 import com.peixing.zhihudaily.adapter.MainAdapter;
-import com.peixing.zhihudaily.component.DaggerMainFragmentComponent;
-import com.peixing.zhihudaily.module.MainFragmentModule;
+import com.peixing.zhihudaily.dagger.component.DaggerMainFragmentComponent;
+import com.peixing.zhihudaily.dagger.module.MainFragmentModule;
 import com.peixing.zhihudaily.presenter.MainPresenter;
 
 import java.util.ArrayList;

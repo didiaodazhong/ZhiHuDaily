@@ -43,6 +43,8 @@ public class DetailActivity extends BaseActivity {
     @BindView(R.id.activity_detail)
     CoordinatorLayout activityDetail;
     private String id;
+    private String title;
+    private String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +52,24 @@ public class DetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String image = intent.getStringExtra("image");
+        title = intent.getStringExtra("title");
+        image = intent.getStringExtra("image");
         id = intent.getStringExtra("id");
-        Log.i(TAG, "onCreate: id：" + id + "--title" + title);
+        Log.i(TAG, "onCreate: id：" + id + "--title--" + title + "---image--" + image);
+
+        initView();
+        initData();
+
+        GlideUtils.LoadPic(getApplicationContext(), image, ivDetail);
+    }
+
+    private void initView() {
         toolbarDetail.setTitle(title);
         setSupportActionBar(toolbarDetail);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        initData();
-
         GlideUtils.LoadPic(getApplicationContext(), image, ivDetail);
     }
 
@@ -104,7 +112,7 @@ public class DetailActivity extends BaseActivity {
                 + "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_header_style.css\"/>"
                 + body.getBody().replace("<div class=\"img-place-holder\">", sb.toString());
         tvDetail.getSettings().setJavaScriptEnabled(true);
-        tvDetail.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        tvDetail.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         tvDetail.loadDataWithBaseURL(null, mNewsContent, "text/html", "UTF-8", null);
     }
 

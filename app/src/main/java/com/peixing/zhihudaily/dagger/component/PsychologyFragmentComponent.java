@@ -1,7 +1,7 @@
-package com.peixing.zhihudaily.component;
+package com.peixing.zhihudaily.dagger.component;
 
 
-import com.peixing.zhihudaily.module.PsychologyFragmentModule;
+import com.peixing.zhihudaily.dagger.module.PsychologyFragmentModule;
 import com.peixing.zhihudaily.ui.fragment.PsychologyFragment;
 
 import dagger.Component;

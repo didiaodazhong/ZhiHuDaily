@@ -1,4 +1,4 @@
-package com.peixing.zhihudaily.module;
+package com.peixing.zhihudaily.dagger.module;
 
 import com.peixing.zhihudaily.presenter.MainPresenter;
 import com.peixing.zhihudaily.ui.fragment.MainFragment;

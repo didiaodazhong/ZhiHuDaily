@@ -1,6 +1,6 @@
-package com.peixing.zhihudaily.component;
+package com.peixing.zhihudaily.dagger.component;
 
-import com.peixing.zhihudaily.module.MainFragmentModule;
+import com.peixing.zhihudaily.dagger.module.MainFragmentModule;
 import com.peixing.zhihudaily.ui.fragment.MainFragment;
 
 import dagger.Component;

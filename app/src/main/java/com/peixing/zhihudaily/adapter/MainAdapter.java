@@ -60,7 +60,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("title", store.get(position).get("title"));
                 intent.putExtra("id", store.get(position).get("id"));
-//                intent.putExtra("image", store.get(position).get("image"));
+                intent.putExtra("image", store.get(position).get("image"));
                 context.startActivity(intent);
             }
         });
